@@ -19,9 +19,33 @@ const changeActivePage = (page) => ({
 	page,
 });
 
+const addSkillsToUser = (user, skills) => {
+	const userForSave = { ...user, skills: user.skills.concat(skills)};
+
+	return {
+		type: ActionType.User.CHANGE_USER,
+		user: userForSave,
+	}
+};
+
+const auth = (login, password) => dispatch => {
+	const user = {
+		name: login,
+		password,
+	};
+
+	axios.post(URL.USER.AUTH, user)
+		.then(result => dispatch({
+			type: ActionType.User.USER_BY_NAME_SUCCESS,
+			user: result.data,
+		}))
+};
+
 const UserAction = {
 	getUsers,
 	changeActivePage,
+	addSkillsToUser,
+	auth,
 };
 
 export default UserAction;

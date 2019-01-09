@@ -9,7 +9,9 @@ class App extends Component {
     return (
       <Container style={{paddingTop: 14}}>
         <Center />
-        <Footer />
+        <Container style={{paddingTop: 80}}>
+          <Footer/>
+        </Container>
       </Container>
     );
   }

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 
-import { Header, Icon, List } from 'semantic-ui-react';
-import randomIconColor from '../common/IconColor';
+import { Header, Icon, List, Button } from 'semantic-ui-react';
 
 class User extends Component {
 	render() {
 		const {
-			name = 'Guest',
-			skills = [],
-			icon = 'user secret',
-		} = this.props.user;
+			user: {
+				name = 'Guest',
+				skills = [],
+				icon = 'user secret',
+			} = {},
+		} = this.props;
 
 
+		console.log("skills", skills)
 		return (
 			<div>
 				<Header as='h2' icon textAlign='center'>
@@ -32,9 +34,14 @@ class User extends Component {
 						return (
 							<List.Item key={i}>
 								<List.Content floated='right'>
-									<Icon name={isNeedsRepeat ? 'exclamation' : 'check'} />
+									<Button basic animated='vertical'>
+										<Button.Content hidden>Repeat</Button.Content>
+										<Button.Content visible>
+											<Icon name='play' />
+										</Button.Content>
+									</Button>
 								</List.Content>
-								<Icon size='big' color={randomIconColor()} name='circle outline'/>
+								<Icon size='big' color={isNeedsRepeat ? 'yellow' : 'green'} name='circle outline'/>
 								<List.Content>
 									<List.Header as='a'>{name}</List.Header>
 									<List.Description>

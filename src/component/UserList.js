@@ -5,26 +5,21 @@ import User from './User';
 
 class UserList extends Component {
 
-	componentDidMount() {
-		this.props.getAll();
-	}
-
 	render() {
 		const {
-			users = [],
+			user,
 		} = this.props;
 
-		return (
-			<div>
-				{ users.map(user => <User key={user.id} user={user}/>) }
-			</div>
-		)
+		console.log("user", user);
+		return <User user={user}/>
 	}
 }
 
 const mapStateToProps = (state) => ({
+	user: state.user.user,
 	users: state.user.users,
 	error: state.user.error,
+	isAuth: state.user.isAuth,
 });
 
 const mapDispatchToProps = (dispatch) => ({

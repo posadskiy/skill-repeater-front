@@ -6,6 +6,7 @@ const USER = {
 	USER_BY_ID: (id) =>  USER_MAIN + "id/" + id,
 	USER_BY_NAME: (name) => `${USER_MAIN}name/${name}`,
 	USER_ALL: USER_MAIN + 'all/',
+	AUTH: USER_MAIN + 'auth/',
 };
 
 const URL = {

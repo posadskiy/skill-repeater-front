@@ -3,6 +3,9 @@ import Page from "../common/Page";
 
 const defaultState = {
 	isAuth: false,
+	user: {
+		skills: [],
+	},
 	users: [],
 	currentUser: {
 		name: "Lex",
@@ -25,6 +28,15 @@ const user = (state = defaultState, action) => {
 		case ActionType.User.CHANGE_ACTIVE_PAGE: return {
 			...state,
 			activePage: action.page,
+		};
+		case ActionType.User.CHANGE_USER: return {
+			...state,
+			user: action.user,
+		};
+		case ActionType.User.USER_BY_NAME_SUCCESS: return {
+			...state,
+			user: action.user,
+			isAuth: true,
 		};
 		default: return state;
 	}

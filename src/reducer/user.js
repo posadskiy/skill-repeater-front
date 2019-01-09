@@ -13,6 +13,7 @@ const defaultState = {
 	},
 	error: undefined,
 	activePage: Page.MAIN,
+	isCreate: true,
 };
 
 const user = (state = defaultState, action) => {
@@ -25,6 +26,11 @@ const user = (state = defaultState, action) => {
 			...state,
 			error: action.error,
 		};
+		case ActionType.User.SAVE_USER_SUCCESS: return {
+			...state,
+			user: action.user,
+			activePage: Page.MAIN,
+		};
 		case ActionType.User.CHANGE_ACTIVE_PAGE: return {
 			...state,
 			activePage: action.page,
@@ -32,6 +38,7 @@ const user = (state = defaultState, action) => {
 		case ActionType.User.CHANGE_USER: return {
 			...state,
 			user: action.user,
+			activePage: Page.MAIN,
 		};
 		case ActionType.User.USER_BY_NAME_SUCCESS: return {
 			...state,

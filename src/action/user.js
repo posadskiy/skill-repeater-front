@@ -28,6 +28,14 @@ const addSkillsToUser = (user, skills) => {
 	}
 };
 
+const save = (user) => dispatch => {
+	axios.put(URL.USER.SAVE, user)
+		.then(result => dispatch({
+			type: ActionType.User.SAVE_USER_SUCCESS,
+			user: result.data,
+		}))
+};
+
 const auth = (login, password) => dispatch => {
 	const user = {
 		name: login,
@@ -45,6 +53,7 @@ const UserAction = {
 	getUsers,
 	changeActivePage,
 	addSkillsToUser,
+	save,
 	auth,
 };
 

@@ -12,8 +12,6 @@ class User extends Component {
 			} = {},
 		} = this.props;
 
-
-		console.log("skills", skills)
 		return (
 			<div>
 				<Header as='h2' icon textAlign='center'>
@@ -22,7 +20,7 @@ class User extends Component {
 				</Header>
 				<List>
 				{
-					skills.map((skill, i) => {
+					skills && skills.map((skill, i) => {
 						const {
 							name = 'Java',
 							isNeedsRepeat = true,

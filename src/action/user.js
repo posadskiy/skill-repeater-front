@@ -20,12 +20,24 @@ const changeActivePage = (page) => ({
 });
 
 const addSkillsToUser = (user, skills) => {
-	const userForSave = { ...user, skills: user.skills.concat(skills)};
+	const userForSave = { ...user, skills: user.skills ? user.skills.concat(skills) : skills};
 
 	return {
 		type: ActionType.User.CHANGE_USER,
 		user: userForSave,
 	}
+};
+
+const saveSkills = (user, skills) => dispatch => {
+	const userForSave = { ...user, skills: user.skills ? user.skills.concat(skills) : skills};
+
+	axios.post(URL.USER.UPDATE, userForSave)
+		.then(result => {
+			dispatch({
+				type: ActionType.User.UPDATE_USER_SUCCESS,
+				user: result.data,
+			});
+		})
 };
 
 const save = (user) => dispatch => {
@@ -49,12 +61,20 @@ const auth = (login, password) => dispatch => {
 		}))
 };
 
+const signUp = () => {
+	return {
+		type: ActionType.User.SIGN_UP,
+	}
+};
+
 const UserAction = {
 	getUsers,
 	changeActivePage,
 	addSkillsToUser,
+	saveSkills,
 	save,
 	auth,
+	signUp,
 };
 
 export default UserAction;

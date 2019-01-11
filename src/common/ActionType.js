@@ -9,6 +9,7 @@ const User = {
 	CHANGE_ACTIVE_PAGE: 'CHANGE_ACTIVE_PAGE',
 
 	CHANGE_USER: 'CHANGE_USER',
+	SIGN_UP: 'SIGN_UP',
 };
 
 const ActionType = {

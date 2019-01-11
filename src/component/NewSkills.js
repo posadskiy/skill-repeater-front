@@ -31,7 +31,8 @@ class NewSkills extends Component {
 	};
 
 	saveSkill = () => {
-		this.props.addSkillsToUser(this.props.user, this.state.newSkills)
+		this.props.addSkillsToUser(this.props.user, this.state.newSkills);
+		this.props.saveSkills(this.props.user, this.state.newSkills);
 	};
 
 	render() {
@@ -60,6 +61,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	addSkillsToUser: (user, skills) => dispatch(UserAction.addSkillsToUser(user, skills)),
+	saveSkills: (user, skills) => UserAction.saveSkills(user, skills)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewSkills);

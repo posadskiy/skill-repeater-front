@@ -10,7 +10,6 @@ class UserList extends Component {
 			user,
 		} = this.props;
 
-		console.log("user", user);
 		return <User user={user}/>
 	}
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import EmptyPage from "./EmptyPage";
+import UserSetting from "./UserSetting";
 import LoginForm from "./LoginForm";
 import CreateUser from './CreateUser';
 import { connect } from 'react-redux';
@@ -12,9 +12,10 @@ class UserPage extends Component {
 			isAuth,
 			auth,
 			save,
+			signUp,
 		} = this.props;
 		if (isCreate) return <CreateUser save={save} />;
-		return isAuth ? <EmptyPage/> : <LoginForm auth={auth}/>
+		return isAuth ? <UserSetting /> : <LoginForm auth={auth} signUp={signUp}/>
 	}
 }
 
@@ -26,6 +27,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	auth: (login, password) => UserAction.auth(login, password)(dispatch),
 	save: (user) => UserAction.save(user)(dispatch),
+	signUp: () => dispatch(UserAction.signUp()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

@@ -27,11 +27,6 @@ class LoginForm extends Component {
 	render() {
 		return (
 			<div className='login-form'>
-				{/*
-      Heads up! The styles below are necessary for the correct render of this example.
-      You can do same with CSS, the main idea is that all the elements up to the `Grid`
-      below must have a height of 100%.
-    */}
 				<style>{`
       body > div,
       body > div > div,
@@ -62,7 +57,7 @@ class LoginForm extends Component {
 							</Segment>
 						</Form>
 						<Message>
-							New to us? Sign Up
+							New to us? <Button basic onClick={this.props.signUp}>Sign up</Button>
 						</Message>
 					</Grid.Column>
 				</Grid>

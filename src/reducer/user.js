@@ -6,14 +6,8 @@ const defaultState = {
 	user: {
 		skills: [],
 	},
-	users: [],
-	currentUser: {
-		name: "Lex",
-		skills: ["groovy", "scala"],
-	},
-	error: undefined,
 	activePage: Page.MAIN,
-	isCreate: true,
+	isCreate: false,
 };
 
 const user = (state = defaultState, action) => {
@@ -30,6 +24,12 @@ const user = (state = defaultState, action) => {
 			...state,
 			user: action.user,
 			activePage: Page.MAIN,
+			isCreate: false,
+			isAuth: true,
+		};
+		case ActionType.User.UPDATE_USER_SUCCESS: return {
+			...state,
+			user: action.user,
 		};
 		case ActionType.User.CHANGE_ACTIVE_PAGE: return {
 			...state,
@@ -44,6 +44,10 @@ const user = (state = defaultState, action) => {
 			...state,
 			user: action.user,
 			isAuth: true,
+		};
+		case ActionType.User.SIGN_UP: return {
+			...state,
+			isCreate: true,
 		};
 		default: return state;
 	}

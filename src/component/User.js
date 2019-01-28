@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 
-import { Header, Icon, List, Button } from 'semantic-ui-react';
+import { Header, Icon, List } from 'semantic-ui-react';
+import Skill from "./Skill";
+import { connect } from 'react-redux';
+import UserAction from "../action/user";
 
 class User extends Component {
+
+	repeatSkill = (i) => {
+		this.props.repeatSkill(i, this.props.user.id);
+	};
+
 	render() {
 		const {
 			user: {
@@ -12,48 +20,58 @@ class User extends Component {
 			} = {},
 		} = this.props;
 
+		const repeatedSkills = skills.filter(skill => !skill.isNeedRepeat);
+		const needRepeatSkills = skills.filter(skill => skill.isNeedRepeat);
+
 		return (
 			<div>
 				<Header as='h2' icon textAlign='center'>
 					<Icon name={icon} circular />
 					<Header.Content>{name}</Header.Content>
 				</Header>
+				<Header as='h3' color='teal' textAlign='center'>
+					Need to repeat
+				</Header>
 				<List>
 				{
-					skills && skills.map((skill, i) => {
-						const {
-							name = 'Java',
-							isNeedsRepeat = true,
-							lastRepeat = new Date('2018-01-26T13:51:50.417Z'),
-							level = 8,
-						} = skill;
-
-						const showDate = new Date(lastRepeat);
-						return (
-							<List.Item key={i}>
-								<List.Content floated='right'>
-									<Button basic animated='vertical'>
-										<Button.Content hidden>Repeat</Button.Content>
-										<Button.Content visible>
-											<Icon name='play' />
-										</Button.Content>
-									</Button>
-								</List.Content>
-								<Icon size='big' color={isNeedsRepeat ? 'yellow' : 'green'} name='circle outline'/>
-								<List.Content>
-									<List.Header as='a'>{name}</List.Header>
-									<List.Description>
-										Level: {level}. Last repeat {showDate.toLocaleDateString() + ' ' + showDate.toLocaleTimeString()}
-									</List.Description>
-								</List.Content>
-							</List.Item>
-						)
-					})
+					needRepeatSkills && needRepeatSkills.map((skill, i) => (
+							<Skill
+								repeatSkill={this.repeatSkill}
+								skill={skill}
+							/>
+					))
 				}
+				</List>
+				<Header as='h3' color='teal' textAlign='center'>
+					Repeated
+				</Header>
+				<List>
+					{
+						repeatedSkills && repeatedSkills.map((skill, i) => (
+							<Skill
+								repeatSkill={this.repeatSkill}
+								skill={skill}
+							/>
+						))
+					}
 				</List>
 			</div>
 		);
 	}
 }
 
-export default User;
+const mapStateToProps = (state) => ({
+	user: state.user.user,
+	users: state.user.users,
+	error: state.user.error,
+	isAuth: state.user.isAuth,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	getAll: () => UserAction.getUsers()(dispatch),
+	getUserById: (id) => UserAction.getUserById(id)(dispatch),
+	save: (user) => UserAction.save(user)(dispatch),
+	repeatSkill: (skillId, userId) => UserAction.repeatSkill(skillId, userId)(dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);

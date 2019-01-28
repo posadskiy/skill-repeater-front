@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "crypto-js": "^3.1.9-1",
     "react": "^16.7.0",
     "react-datepicker": "^2.0.0",
     "react-dom": "^16.7.0",

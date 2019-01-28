@@ -1,6 +1,7 @@
 import URL from '../common/URL';
 import ActionType from '../common/ActionType';
 import axios from 'axios';
+import hmacSha256 from 'crypto-js/hmac-sha256';
 
 const getUsers = () => (dispatch, getState) => {
 	axios.get(URL.USER.USER_ALL)
@@ -14,24 +15,22 @@ const getUsers = () => (dispatch, getState) => {
 		}))
 };
 
+const getUserById = (id) => (dispatch) => {
+	axios.get(URL.USER.USER_BY_ID(id))
+		.then(result => dispatch({
+			type: ActionType.User.USER_BY_ID_SUCCESS,
+			user: result.data,
+		}))
+		.catch(result => console.log(result))
+};
+
 const changeActivePage = (page) => ({
 	type: ActionType.User.CHANGE_ACTIVE_PAGE,
 	page,
 });
 
-const addSkillsToUser = (user, skills) => {
-	const userForSave = { ...user, skills: user.skills ? user.skills.concat(skills) : skills};
-
-	return {
-		type: ActionType.User.CHANGE_USER,
-		user: userForSave,
-	}
-};
-
-const saveSkills = (user, skills) => dispatch => {
-	const userForSave = { ...user, skills: user.skills ? user.skills.concat(skills) : skills};
-
-	axios.post(URL.USER.UPDATE, userForSave)
+const saveSkills = (userId, skills) => dispatch => {
+	axios.post(URL.USER.SAVE_SKILL(userId), skills)
 		.then(result => {
 			dispatch({
 				type: ActionType.User.UPDATE_USER_SUCCESS,
@@ -48,15 +47,36 @@ const save = (user) => dispatch => {
 		}))
 };
 
+const repeatSkill = (skillId, userId) => (dispatch) => {
+	axios.post(URL.USER.REPEAT_SKILL(userId, skillId))
+		.then(result => dispatch({
+			type: ActionType.User.REPEAT_SKILL_SUCCESS,
+			user: result.data,
+		}))
+};
+
 const auth = (login, password) => dispatch => {
 	const user = {
-		name: login,
-		password,
+		login,
+		password: hmacSha256(password, "$!@#$%$#@").toString(),
 	};
 
 	axios.post(URL.USER.AUTH, user)
 		.then(result => dispatch({
 			type: ActionType.User.USER_BY_NAME_SUCCESS,
+			user: result.data,
+		}))
+};
+
+const registration = (user) => dispatch => {
+	const userForSave = {
+		...user,
+		password: hmacSha256(user.password, "$!@#$%$#@").toString(),
+	};
+
+	axios.post(URL.USER.REG, userForSave)
+		.then(result => dispatch({
+			type: ActionType.User.REG_SUCCESS,
 			user: result.data,
 		}))
 };
@@ -69,11 +89,13 @@ const signUp = () => {
 
 const UserAction = {
 	getUsers,
+	getUserById,
 	changeActivePage,
-	addSkillsToUser,
 	saveSkills,
 	save,
+	repeatSkill,
 	auth,
+	registration,
 	signUp,
 };
 

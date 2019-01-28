@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Page from '../common/Page';
-import UserList from "./UserList";
+import User from "./User";
 import EmptyPage from "./EmptyPage";
 import UserPage from "./UserPage";
 import {connect} from "react-redux";
@@ -15,7 +15,7 @@ class Center extends Component {
 		} = this.props;
 
 		switch(activePage) {
-			case Page.MAIN: return <UserList/>;
+			case Page.MAIN: return <User/>;
 			case Page.ADD: return <NewSkills/>;
 			case Page.USER: return <UserPage/>;
 			default: return <EmptyPage/>;

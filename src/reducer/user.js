@@ -20,6 +20,10 @@ const user = (state = defaultState, action) => {
 			...state,
 			error: action.error,
 		};
+		case ActionType.User.USER_BY_ID_SUCCESS: return {
+			...state,
+			user: action.user,
+		};
 		case ActionType.User.SAVE_USER_SUCCESS: return {
 			...state,
 			user: action.user,
@@ -28,6 +32,10 @@ const user = (state = defaultState, action) => {
 			isAuth: true,
 		};
 		case ActionType.User.UPDATE_USER_SUCCESS: return {
+			...state,
+			user: action.user,
+		};
+		case ActionType.User.REPEAT_SKILL_SUCCESS: return {
 			...state,
 			user: action.user,
 		};
@@ -48,6 +56,13 @@ const user = (state = defaultState, action) => {
 		case ActionType.User.SIGN_UP: return {
 			...state,
 			isCreate: true,
+		};
+		case ActionType.User.REG_SUCCESS: console.log(action); return {
+			...state,
+			user: action.user,
+			isAuth: true,
+			isCreate: false,
+			activePage: Page.MAIN,
 		};
 		default: return state;
 	}

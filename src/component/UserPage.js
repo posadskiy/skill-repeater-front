@@ -11,10 +11,10 @@ class UserPage extends Component {
 			isCreate,
 			isAuth,
 			auth,
-			save,
+			registration,
 			signUp,
 		} = this.props;
-		if (isCreate) return <CreateUser save={save} />;
+		if (isCreate) return <CreateUser registration={registration} />;
 		return isAuth ? <UserSetting /> : <LoginForm auth={auth} signUp={signUp}/>
 	}
 }
@@ -26,6 +26,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	auth: (login, password) => UserAction.auth(login, password)(dispatch),
+	registration: (user) => UserAction.registration(user)(dispatch),
 	save: (user) => UserAction.save(user)(dispatch),
 	signUp: () => dispatch(UserAction.signUp()),
 });

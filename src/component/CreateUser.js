@@ -4,13 +4,13 @@ import { Button, Checkbox, Form, Icon, Input } from 'semantic-ui-react'
 
 class CreateUser extends Component {
 	state = {
-		name: '',
+		login: '',
 		email: '',
 		password: '',
 	};
 
-	onChangeName = (event) => {
-		this.setState({name: event.target.value});
+	onChangeLogin = (event) => {
+		this.setState({login: event.target.value});
 	};
 
 	onChangeEmail = (event) => {
@@ -21,25 +21,25 @@ class CreateUser extends Component {
 		this.setState({password: event.target.value});
 	};
 
-	onSave = () => {
+	onReg = () => {
 		const {
-			save,
+			registration,
 		} = this.props;
 
 		const {
-			name,
+			login,
 			email,
 			password,
 		} = this.state;
 
-		save({name, email, password})
+		registration({login, email, password})
 	};
 
 	render() {
 		return (
 			<Form>
 				<Form.Field>
-					<Input iconPosition='left' placeholder='Name' onChange={this.onChangeName} >
+					<Input iconPosition='left' placeholder='Name' onChange={this.onChangeLogin} >
 						<Icon name='user' />
 						<input />
 					</Input>
@@ -62,7 +62,7 @@ class CreateUser extends Component {
 				<Form.Field required>
 					<Checkbox label='I agree to the Terms and Conditions' />
 				</Form.Field>
-				<Button onClick={this.onSave} type='submit'>Sign up</Button>
+				<Button onClick={this.onReg} type='submit'>Sign up</Button>
 			</Form>
 		)
 	}

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Header, Icon, List } from 'semantic-ui-react';
 import Skill from "./Skill";
 import { connect } from 'react-redux';
-import UserAction from "../action/user";
+import Action from "../action";
 
 class User extends Component {
 
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	repeatSkill: (skillId, userId) => UserAction.repeatSkill(skillId, userId)(dispatch),
+	repeatSkill: (skillId, userId) => Action.User.repeatSkill(skillId, userId)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

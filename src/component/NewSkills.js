@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 
 import { Button, Form, Transition, List } from 'semantic-ui-react'
 import NewSkill from "./NewSkill";
-import UserAction from "../action/user";
+import Action from "../action";
 import {connect} from "react-redux";
-import Page from "../common/Page";
 
 class NewSkills extends Component {
 	state = {
@@ -39,7 +38,7 @@ class NewSkills extends Component {
 
 	saveSkill = () => {
 		this.props.saveSkills(this.props.user.id, this.state.newSkills);
-		this.props.changeActivePage(Page.MAIN);
+		this.props.setMainPage();
 	};
 
 	render() {
@@ -76,8 +75,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	saveSkills: (user, skills) => UserAction.saveSkills(user, skills)(dispatch),
-	changeActivePage: (page) => dispatch(UserAction.changeActivePage(page)),
+	saveSkills: (user, skills) => Action.User.saveSkills(user, skills)(dispatch),
+	setMainPage: () => dispatch(Action.Page.setMainPage()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewSkills);

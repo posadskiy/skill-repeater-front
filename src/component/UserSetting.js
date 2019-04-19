@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux'
 
-import UserAction from '../action/user';
+import Action from '../action';
 
 class UserSetting extends Component {
 	render() {
@@ -12,8 +12,7 @@ class UserSetting extends Component {
 
 		return (
 			<div>
-				User settings
-				<Button.Group vertical>
+				<Button.Group basic vertical fluid>
 					<Button>Account settings</Button>
 					<Button onClick={logOut}>Log out</Button>
 				</Button.Group>
@@ -23,7 +22,7 @@ class UserSetting extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	logOut: () => UserAction.logOut()(dispatch)
+	logOut: () => Action.User.logOut()(dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(UserSetting);

@@ -2,6 +2,7 @@ import URL from '../common/URL';
 import ActionType from '../common/ActionType';
 import axios from 'axios';
 import hmacSha256 from 'crypto-js/hmac-sha256';
+import Action from '../action';
 
 const getUsers = () => (dispatch, getState) => {
 	axios.get(URL.USER.USER_ALL)
@@ -24,11 +25,6 @@ const getUserById = (id) => (dispatch) => {
 		.catch(result => console.log(result))
 };
 
-const changeActivePage = (page) => ({
-	type: ActionType.User.CHANGE_ACTIVE_PAGE,
-	page,
-});
-
 const saveSkills = (userId, skills) => dispatch => {
 	axios.post(URL.USER.SAVE_SKILL(userId), skills)
 		.then(result => {
@@ -44,7 +40,8 @@ const save = (user) => dispatch => {
 		.then(result => dispatch({
 			type: ActionType.User.SAVE_USER_SUCCESS,
 			user: result.data,
-		}))
+		}));
+	dispatch(Action.Page.setMainPage());
 };
 
 const repeatSkill = (skillId, userId) => (dispatch) => {
@@ -65,7 +62,9 @@ const auth = (login, password) => dispatch => {
 		.then(result => dispatch({
 			type: ActionType.User.USER_BY_NAME_SUCCESS,
 			user: result.data,
-		}))
+		}));
+
+	dispatch(Action.Page.setMainPage());
 };
 
 const registration = (user) => dispatch => {
@@ -78,18 +77,14 @@ const registration = (user) => dispatch => {
 		.then(result => dispatch({
 			type: ActionType.User.REG_SUCCESS,
 			user: result.data,
-		}))
-};
+		}));
 
-const signUp = () => {
-	return {
-		type: ActionType.User.SIGN_UP,
-	}
+	dispatch(Action.Page.setMainPage());
 };
 
 const logOut = () => (dispatch) => {
 	dispatch(clearUser());
-	dispatch(setMainPage());
+	dispatch(Action.Page.setMainPage());
 };
 
 const clearUser = () => {
@@ -98,23 +93,15 @@ const clearUser = () => {
 	}
 };
 
-const setMainPage = () => {
-	return {
-		type: ActionType.Page.MAIN_PAGE,
-	}
-};
-
-const UserAction = {
+const User = {
 	getUsers,
 	getUserById,
-	changeActivePage,
 	saveSkills,
 	save,
 	repeatSkill,
 	auth,
 	registration,
-	signUp,
 	logOut,
 };
 
-export default UserAction;
+export default User;

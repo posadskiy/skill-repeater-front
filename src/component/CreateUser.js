@@ -35,6 +35,10 @@ class CreateUser extends Component {
 		registration({login, email, password})
 	};
 
+	cancel = () => {
+		this.props.goToUserLoginPage();
+	};
+
 	render() {
 		return (
 			<Form>
@@ -63,6 +67,7 @@ class CreateUser extends Component {
 					<Checkbox label='I agree to the Terms and Conditions' />
 				</Form.Field>
 				<Button onClick={this.onReg} type='submit'>Sign up</Button>
+				<Button onClick={this.cancel}>Cancel</Button>
 			</Form>
 		)
 	}

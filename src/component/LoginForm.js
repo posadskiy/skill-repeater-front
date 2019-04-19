@@ -57,7 +57,7 @@ class LoginForm extends Component {
 							</Segment>
 						</Form>
 						<Message>
-							New to us? <Button basic onClick={this.props.signUp}>Sign up</Button>
+							New to us? <Button basic onClick={this.props.setUserCreatePage}>Sign up</Button>
 						</Message>
 					</Grid.Column>
 				</Grid>

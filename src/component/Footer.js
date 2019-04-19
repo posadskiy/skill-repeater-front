@@ -5,7 +5,7 @@ import {
 	Menu,
 	Icon,
 } from 'semantic-ui-react';
-import UserAction from "../action/user";
+import Action from "../action";
 import {connect} from "react-redux";
 import Page from "../common/Page";
 
@@ -17,7 +17,10 @@ class Footer extends Component {
 	render() {
 		const {
 			activePage,
+			isAuth,
 		} = this.props;
+
+		const userPage = isAuth ? Page.USER_SETTINGS : Page.USER_LOGIN
 
 		return (
 			<Container>
@@ -41,8 +44,8 @@ class Footer extends Component {
 					</Menu.Item>
 
 					<Menu.Item
-						name={Page.USER}
-						active={activePage === Page.USER}
+						name={userPage}
+						active={activePage === userPage}
 						onClick={this.onClickMenuItem}
 					>
 						<Icon name='user' />
@@ -55,11 +58,12 @@ class Footer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	activePage: state.user.activePage,
+	activePage: state.page.activePage,
+	isAuth: state.user.isAuth,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	changeActivePage: (page) => dispatch(UserAction.changeActivePage(page)),
+	changeActivePage: (page) => dispatch(Action.Page.changeActivePage(page)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

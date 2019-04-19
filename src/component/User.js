@@ -62,15 +62,10 @@ class User extends Component {
 
 const mapStateToProps = (state) => ({
 	user: state.user.user,
-	users: state.user.users,
-	error: state.user.error,
 	isAuth: state.user.isAuth,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getAll: () => UserAction.getUsers()(dispatch),
-	getUserById: (id) => UserAction.getUserById(id)(dispatch),
-	save: (user) => UserAction.save(user)(dispatch),
 	repeatSkill: (skillId, userId) => UserAction.repeatSkill(skillId, userId)(dispatch),
 });
 

@@ -20,7 +20,6 @@ class Center extends Component {
 			case Page.USER: return <UserPage/>;
 			default: return <EmptyPage/>;
 		}
-
 	}
 }
 

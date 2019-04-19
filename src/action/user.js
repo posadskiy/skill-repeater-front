@@ -87,6 +87,23 @@ const signUp = () => {
 	}
 };
 
+const logOut = () => (dispatch) => {
+	dispatch(clearUser());
+	dispatch(setMainPage());
+};
+
+const clearUser = () => {
+	return {
+		type: ActionType.User.CLEAR,
+	}
+};
+
+const setMainPage = () => {
+	return {
+		type: ActionType.Page.MAIN_PAGE,
+	}
+};
+
 const UserAction = {
 	getUsers,
 	getUserById,
@@ -97,6 +114,7 @@ const UserAction = {
 	auth,
 	registration,
 	signUp,
+	logOut,
 };
 
 export default UserAction;

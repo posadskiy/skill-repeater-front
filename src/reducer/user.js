@@ -57,11 +57,19 @@ const user = (state = defaultState, action) => {
 			...state,
 			isCreate: true,
 		};
-		case ActionType.User.REG_SUCCESS: console.log(action); return {
+		case ActionType.User.REG_SUCCESS: return {
 			...state,
 			user: action.user,
 			isAuth: true,
 			isCreate: false,
+			activePage: Page.MAIN,
+		};
+		case ActionType.User.CLEAR: return {
+			...state,
+			user: undefined,
+			isAuth: false,
+		};
+		case ActionType.Page.MAIN_PAGE: return {
 			activePage: Page.MAIN,
 		};
 		default: return state;

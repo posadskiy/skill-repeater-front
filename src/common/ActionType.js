@@ -13,12 +13,18 @@ const User = {
 
 	CHANGE_USER: 'CHANGE_USER',
 	SIGN_UP: 'SIGN_UP',
+	CLEAR: 'CLEAR',
 
 	REG_SUCCESS: 'REG_SUCCESS',
 };
 
+const Page = {
+	MAIN_PAGE: "MAIN_PAGE",
+};
+
 const ActionType = {
 	User,
+	Page,
 };
 
 export default ActionType;

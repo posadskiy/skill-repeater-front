@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.1.126:8080/';
+const SERVER_URL = 'http://192.168.100.7:8080/';
 
 const USER_MAIN = SERVER_URL + 'user/';
 

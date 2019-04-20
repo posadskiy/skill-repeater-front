@@ -14,19 +14,23 @@ class Center extends Component {
 
 	render() {
 		const {
+			user,
 			auth,
 			activePage,
 			registration,
 			goToUserLoginPage,
 			goToUserCreatePage,
+			deleteAccount,
 		} = this.props;
+
+		const deleteAcc = () => deleteAccount(user.id);
 
 		switch(activePage) {
 			case Page.MAIN: return <User/>;
 			case Page.ADD: return <NewSkills/>;
 			case Page.USER_CREATE: return <CreateUser registration={registration} goToUserLoginPage={goToUserLoginPage}/>;
 			case Page.USER_LOGIN: return <LoginForm auth={auth} setUserCreatePage={goToUserCreatePage} />;
-			case Page.USER_SETTINGS: return <UserSetting/>;
+			case Page.USER_SETTINGS: return <UserSetting deleteAccount={deleteAcc}/>;
 			default: return <EmptyPage/>;
 		}
 	}
@@ -34,6 +38,7 @@ class Center extends Component {
 
 const mapStateToProps = (state) => ({
 	activePage: state.page.activePage,
+	user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -41,6 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
 	registration: (user) => Action.User.registration(user)(dispatch),
 	goToUserLoginPage: () => dispatch(Action.Page.goToUserLoginPage()),
 	goToUserCreatePage: () => dispatch(Action.Page.goToUserCreatePage()),
+	deleteAccount: () => Action.User.deleteAccount()(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Center);

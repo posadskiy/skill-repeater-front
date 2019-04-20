@@ -44,6 +44,14 @@ const save = (user) => dispatch => {
 	dispatch(Action.Page.setMainPage());
 };
 
+const deleteAccount = (userId) => dispatch => {
+	axios.delete(URL.USER.DELETE(userId))
+		.then(() => dispatch({
+			type: ActionType.User.DELETE_USER_SUCCESS,
+		}));
+	dispatch(Action.Page.setMainPage());
+};
+
 const repeatSkill = (skillId, userId) => (dispatch) => {
 	axios.post(URL.USER.REPEAT_SKILL(userId, skillId))
 		.then(result => dispatch({
@@ -98,6 +106,7 @@ const User = {
 	getUserById,
 	saveSkills,
 	save,
+	deleteAccount,
 	repeatSkill,
 	auth,
 	registration,

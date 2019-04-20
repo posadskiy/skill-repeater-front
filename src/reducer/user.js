@@ -30,6 +30,11 @@ const user = (state = defaultState, action) => {
 			...state,
 			user: action.user,
 		};
+		case ActionType.User.DELETE_USER_SUCCESS: return {
+			...state,
+			user: undefined,
+			isAuth: false,
+		};
 		case ActionType.User.REPEAT_SKILL_SUCCESS: return {
 			...state,
 			user: action.user,

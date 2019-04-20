@@ -9,6 +9,7 @@ const USER = {
 	AUTH: USER_MAIN + 'auth/',
 	REG: USER_MAIN + 'reg/',
 	SAVE: USER_MAIN,
+	DELETE: (userId) => `${USER_MAIN}delete/${userId}`,
 	SAVE_SKILL: (userId) => `${USER_MAIN}${userId}/skill/add`,
 	UPDATE: USER_MAIN,
 	REPEAT_SKILL: (userId, skillId) =>  USER_MAIN + `${userId}/skill/repeat/${skillId}`,

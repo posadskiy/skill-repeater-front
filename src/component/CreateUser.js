@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { Button, Checkbox, Form, Icon, Input, Message } from 'semantic-ui-react'
+import { Button, Form, Icon, Message } from 'semantic-ui-react'
 
 class CreateUser extends Component {
 	state = {
@@ -133,8 +133,11 @@ class CreateUser extends Component {
 				<Form.Field>
 					<Form.Checkbox required onClick={this.changeAgreeTerms} checked={isAgreeTerm} label='I agree to the Terms and Conditions' error={errorTermCheckbox} />
 				</Form.Field>
-				<Button onClick={this.onReg} type='submit'>Sign up</Button>
-				<Button onClick={this.cancel}>Cancel</Button>
+				<Button.Group fluid>
+					<Button onClick={this.cancel}>Cancel</Button>
+					<Button.Or />
+					<Button onClick={this.onReg} positive>Sign up</Button>
+				</Button.Group>
 			</Form>
 		)
 	}

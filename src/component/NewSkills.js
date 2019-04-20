@@ -63,7 +63,7 @@ class NewSkills extends Component {
 				<Button.Group>
 					<Button disabled={newSkills.length === 0} icon='minus' onClick={this.onDeleteSkill} />
 					<Button icon='plus' onClick={this.onAddSkill} />
-					<Button onClick={this.saveSkill}>Add</Button>
+					<Button onClick={this.saveSkill} positive>Add</Button>
 				</Button.Group>
 			</Form>
 		)

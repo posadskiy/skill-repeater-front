@@ -51,7 +51,7 @@ class LoginForm extends Component {
 									type='password'
 								/>
 
-								<Button onClick={this.onClickLogin} color='teal' fluid size='large'>
+								<Button onClick={this.onClickLogin} positive fluid size='large'>
 									Login
 								</Button>
 							</Segment>

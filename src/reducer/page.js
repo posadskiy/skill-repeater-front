@@ -29,7 +29,9 @@ const page = (state = defaultState, action) => {
         case ActionType.Page.USER_SETTINGS_PAGE: return {
             activePage: Page.USER_SETTINGS,
         };
-
+        case ActionType.Common.RESET_STATE: return {
+            ...action.state.page,
+        };
         default: return state;
     }
 };

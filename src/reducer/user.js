@@ -54,6 +54,9 @@ const user = (state = defaultState, action) => {
 			user: undefined,
 			isAuth: false,
 		};
+		case ActionType.Common.RESET_STATE: return {
+			...action.state.user,
+		};
 		default: return state;
 	}
 };

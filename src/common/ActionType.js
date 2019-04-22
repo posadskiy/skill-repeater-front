@@ -25,9 +25,15 @@ const Page = {
 	USER_SETTINGS_PAGE: 'USER_SETTINGS_PAGE',
 };
 
+const Common = {
+	INIT: 'INIT',
+	RESET_STATE: 'RESET_STATE',
+};
+
 const ActionType = {
 	User,
 	Page,
+	Common,
 };
 
 export default ActionType;

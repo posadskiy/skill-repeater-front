@@ -3,9 +3,10 @@ import ActionType from '../common/ActionType';
 import axios from 'axios';
 import hmacSha256 from 'crypto-js/hmac-sha256';
 import Action from '../action';
+import { RequestConfig } from '../common/settings';
 
 const getUsers = () => (dispatch, getState) => {
-	axios.get(URL.USER.USER_ALL)
+	axios.get(URL.USER.USER_ALL, RequestConfig)
 		.then(result => dispatch({
 			type: ActionType.User.USER_ALL_SUCCESS,
 			users: result.data,
@@ -17,7 +18,7 @@ const getUsers = () => (dispatch, getState) => {
 };
 
 const getUserById = (id) => (dispatch) => {
-	axios.get(URL.USER.USER_BY_ID(id))
+	axios.get(URL.USER.USER_BY_ID(id), RequestConfig)
 		.then(result => dispatch({
 			type: ActionType.User.USER_BY_ID_SUCCESS,
 			user: result.data,
@@ -26,7 +27,7 @@ const getUserById = (id) => (dispatch) => {
 };
 
 const saveSkills = (userId, skills) => dispatch => {
-	axios.post(URL.USER.SAVE_SKILL(userId), skills)
+	axios.post(URL.USER.SAVE_SKILL(userId), skills, RequestConfig)
 		.then(result => {
 			dispatch({
 				type: ActionType.User.UPDATE_USER_SUCCESS,
@@ -36,7 +37,7 @@ const saveSkills = (userId, skills) => dispatch => {
 };
 
 const save = (user) => dispatch => {
-	axios.put(URL.USER.SAVE, user)
+	axios.put(URL.USER.SAVE, user, RequestConfig)
 		.then(result => dispatch({
 			type: ActionType.User.SAVE_USER_SUCCESS,
 			user: result.data,
@@ -45,7 +46,7 @@ const save = (user) => dispatch => {
 };
 
 const deleteAccount = (userId) => dispatch => {
-	axios.delete(URL.USER.DELETE(userId))
+	axios.delete(URL.USER.DELETE(userId), RequestConfig)
 		.then(() => dispatch({
 			type: ActionType.User.DELETE_USER_SUCCESS,
 		}));
@@ -53,7 +54,7 @@ const deleteAccount = (userId) => dispatch => {
 };
 
 const repeatSkill = (skillId, userId) => (dispatch) => {
-	axios.post(URL.USER.REPEAT_SKILL(userId, skillId))
+	axios.get(URL.USER.REPEAT_SKILL(userId, skillId), RequestConfig)
 		.then(result => dispatch({
 			type: ActionType.User.REPEAT_SKILL_SUCCESS,
 			user: result.data,
@@ -66,11 +67,15 @@ const auth = (login, password) => dispatch => {
 		password: hmacSha256(password, "$!@#$%$#@").toString(),
 	};
 
-	axios.post(URL.USER.AUTH, user)
-		.then(result => dispatch({
-			type: ActionType.User.USER_BY_NAME_SUCCESS,
-			user: result.data,
-		}));
+	axios.post(URL.USER.AUTH, user, RequestConfig)
+		.then(result => {
+			console.log(result);
+			dispatch({
+				type: ActionType.User.USER_BY_NAME_SUCCESS,
+				user: result.data,
+			})
+		})
+		.catch(exception => console.log(exception));
 
 	dispatch(Action.Page.setMainPage());
 };
@@ -81,7 +86,7 @@ const registration = (user) => dispatch => {
 		password: hmacSha256(user.password, "$!@#$%$#@").toString(),
 	};
 
-	axios.post(URL.USER.REG, userForSave)
+	axios.post(URL.USER.REG, userForSave, RequestConfig)
 		.then(result => dispatch({
 			type: ActionType.User.REG_SUCCESS,
 			user: result.data,

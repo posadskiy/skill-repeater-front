@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducer'
 import { devToolsEnhancer } from 'redux-devtools-extension';
-import Setting from './settings';
+import { AppSetting } from './common/settings';
 import ActionType from './common/ActionType';
 
 const store = createStore(rootReducer, compose(devToolsEnhancer(), applyMiddleware(load, dump)));
@@ -24,7 +24,7 @@ function load({ getState }) {
 
 		if (type === ActionType.Common.INIT) {
 			try {
-				const state = JSON.parse(localStorage.getItem(Setting.APP_NAME));
+				const state = JSON.parse(localStorage.getItem(AppSetting.APP_NAME));
 				if (!state) return;
 				store.dispatch({
 					type: ActionType.Common.RESET_STATE,
@@ -42,7 +42,7 @@ function load({ getState }) {
 function dump({ getState }) {
 	return next => action => {
 		const returnValue = next(action);
-		localStorage.setItem(Setting.APP_NAME, JSON.stringify(store.getState()));
+		localStorage.setItem(AppSetting.APP_NAME, JSON.stringify(store.getState()));
 		return returnValue;
 	}
 }

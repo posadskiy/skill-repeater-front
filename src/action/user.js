@@ -36,6 +36,24 @@ const saveSkills = (userId, skills) => dispatch => {
 		})
 };
 
+const deleteSkill = (userId, skillId) => dispatch => {
+	axios.delete(URL.USER.DELETE_SKILL(userId, skillId), RequestConfig)
+		.then(result => {
+			dispatch({
+				type: ActionType.User.UPDATE_USER_SUCCESS,
+				user: result.data,
+			});
+		})
+};
+
+const repeatSkill = (userId, skillId) => (dispatch) => {
+	axios.get(URL.USER.REPEAT_SKILL(userId, skillId), RequestConfig)
+		.then(result => dispatch({
+			type: ActionType.User.REPEAT_SKILL_SUCCESS,
+			user: result.data,
+		}))
+};
+
 const save = (user) => dispatch => {
 	axios.put(URL.USER.SAVE, user, RequestConfig)
 		.then(result => dispatch({
@@ -51,14 +69,6 @@ const deleteAccount = (userId) => dispatch => {
 			type: ActionType.User.DELETE_USER_SUCCESS,
 		}));
 	dispatch(Action.Page.setMainPage());
-};
-
-const repeatSkill = (skillId, userId) => (dispatch) => {
-	axios.get(URL.USER.REPEAT_SKILL(userId, skillId), RequestConfig)
-		.then(result => dispatch({
-			type: ActionType.User.REPEAT_SKILL_SUCCESS,
-			user: result.data,
-		}))
 };
 
 const auth = (login, password) => dispatch => {
@@ -110,6 +120,7 @@ const User = {
 	getUsers,
 	getUserById,
 	saveSkills,
+	deleteSkill,
 	save,
 	deleteAccount,
 	repeatSkill,

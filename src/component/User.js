@@ -8,7 +8,11 @@ import Action from "../action";
 class User extends Component {
 
 	repeatSkill = (i) => {
-		this.props.repeatSkill(i, this.props.user.id);
+		this.props.repeatSkill(this.props.user.id, i);
+	};
+
+	deleteSkill = (i) => {
+		this.props.deleteSkill(this.props.user.id, i);
 	};
 
 	render() {
@@ -37,6 +41,7 @@ class User extends Component {
 					needRepeatSkills && needRepeatSkills.map((skill, i) => (
 							<Skill
 								repeatSkill={this.repeatSkill}
+								deleteSkill={this.deleteSkill}
 								skill={skill}
 							/>
 					))
@@ -50,6 +55,7 @@ class User extends Component {
 						repeatedSkills && repeatedSkills.map((skill, i) => (
 							<Skill
 								repeatSkill={this.repeatSkill}
+								deleteSkill={this.deleteSkill}
 								skill={skill}
 							/>
 						))
@@ -66,7 +72,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	repeatSkill: (skillId, userId) => Action.User.repeatSkill(skillId, userId)(dispatch),
+	deleteSkill: (userId, skillId) => Action.User.deleteSkill(userId, skillId)(dispatch),
+	repeatSkill: (userId, skillId) => Action.User.repeatSkill(userId, skillId)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

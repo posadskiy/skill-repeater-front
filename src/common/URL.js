@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://localhost:8080/';
+const SERVER_URL = 'http://192.168.100.7:8080/';
 
 const USER_MAIN = SERVER_URL + 'user/';
 
@@ -11,6 +11,7 @@ const USER = {
 	SAVE: USER_MAIN,
 	DELETE: (userId) => `${USER_MAIN}delete/${userId}`,
 	SAVE_SKILL: (userId) => `${USER_MAIN}${userId}/skill/add`,
+	DELETE_SKILL: (userId, skillId) => `${USER_MAIN}${userId}/skill/${skillId}`,
 	UPDATE: USER_MAIN,
 	REPEAT_SKILL: (userId, skillId) =>  USER_MAIN + `${userId}/skill/repeat/${skillId}`,
 };

@@ -8,7 +8,7 @@ import {Provider} from 'react-redux';
 import rootReducer from './reducer'
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {ActionType} from './common';
-import {name} from '../package.json';
+import packageInfo from '../package.json';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(load, dump)));
 
@@ -24,7 +24,7 @@ function load({getState}) {
 
 		if (type === ActionType.Common.INIT) {
 			try {
-				const state = JSON.parse(localStorage.getItem(name));
+				const state = JSON.parse(localStorage.getItem(packageInfo.name));
 				if (!state) return;
 
 				state.user.isLoading = false;
@@ -46,7 +46,7 @@ function load({getState}) {
 function dump({getState}) {
 	return next => action => {
 		const returnValue = next(action);
-		localStorage.setItem(name, JSON.stringify(store.getState()));
+		localStorage.setItem(packageInfo.name, JSON.stringify(store.getState()));
 		return returnValue;
 	}
 }

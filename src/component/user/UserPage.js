@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from "react-router-dom";
 
 import Action from '../../action';
-import {version} from '../../../package.json';
+import packageInfo from '../../../package.json';
 import {Url} from '../../common';
 
 class UserPage extends Component {
@@ -43,7 +43,7 @@ class UserPage extends Component {
 				<Button.Group basic vertical fluid>
 					<Button as={Link} to={CONTACT}>Contact</Button>
 				</Button.Group>
-				<p style={{marginTop: '14px'}}>App version: {version}</p>
+				<p style={{marginTop: '14px'}}>App version: {packageInfo.version}</p>
 			</div>
 		)
 	}

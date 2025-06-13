@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Paper, Title, TextInput, Textarea, Select, Button, Stack, Text, NumberInput, Group } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -17,18 +17,26 @@ export function EditSkill() {
     enabled: !!id
   });
 
-  const [name, setName] = useState(skill?.name || '');
-  const [description, setDescription] = useState(skill?.description || '');
-  const [period, setPeriod] = useState<Period>(skill?.period || 'DAYS');
-  const [number, setNumber] = useState<number | ''>(skill?.number || 1);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [period, setPeriod] = useState<Period>('DAYS');
+  const [number, setNumber] = useState<number | ''>(1);
+
+  useEffect(() => {
+    if (skill) {
+      setName(skill.name);
+      setDescription(skill.description);
+      setPeriod(skill.period);
+      setNumber(skill.number);
+    }
+  }, [skill]);
 
   const updateMutation = useMutation({
-    mutationFn: () => skillsApi.update(Number(id), {
+    mutationFn: () => skillsApi.update({
+      id: Number(id),
       name,
       description,
       level: skill?.level || 1,
-      lastRepeated: skill?.lastRepeated || new Date().toISOString(),
-      nextRepeated: skill?.nextRepeated || new Date().toISOString(),
       userId,
       period,
       number: number === '' ? 1 : number

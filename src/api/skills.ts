@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import type { Skill, RepeatHistory } from '../types/api';
+import type { Skill, RepeatHistory, CreateSkillInput, UpdateSkillInput } from '../types/api';
 
 export const skillsApi = {
   getAll: async (userId: number): Promise<Skill[]> => {
@@ -12,18 +12,18 @@ export const skillsApi = {
     return response.data;
   },
 
-  add: async (skill: Omit<Skill, 'id'>): Promise<Skill> => {
+  add: async (skill: CreateSkillInput): Promise<Skill> => {
     const response = await apiClient.post<Skill>('/v0/skill/add', skill);
     return response.data;
   },
 
-  addAll: async (skills: Omit<Skill, 'id'>[]): Promise<Skill[]> => {
+  addAll: async (skills: CreateSkillInput[]): Promise<Skill[]> => {
     const response = await apiClient.post<Skill[]>('/v0/skill/add-all', skills);
     return response.data;
   },
 
-  update: async (id: number, skill: Partial<Skill>): Promise<Skill> => {
-    const response = await apiClient.put<Skill>(`/v0/skill/update/${id}`, skill);
+  update: async (skill: UpdateSkillInput): Promise<Skill> => {
+    const response = await apiClient.post<Skill>('/v0/skill/edit', skill);
     return response.data;
   },
 

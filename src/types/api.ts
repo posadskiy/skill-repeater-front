@@ -1,13 +1,14 @@
+export type Period = 'HOURS' | 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS';
+
 export interface Skill {
   id: number;
   name: string;
   description: string;
-  category: string;
   level: number;
   lastRepeated: string;
   nextRepeated: string;
   userId: number;
-  period: 'HOURS' | 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS';
+  period: Period;
   number: number;
 }
 

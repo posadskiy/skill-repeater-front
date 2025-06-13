@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Paper, Title, TextInput, Textarea, Select, Button, Stack, Text, NumberInput, Group } from '@mantine/core';
+import { Container, Paper, Title, TextInput, Textarea, Select, Button, Stack, Text, NumberInput, Group, Flex, Modal } from '@mantine/core';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
@@ -10,6 +10,7 @@ export function EditSkill() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userId = Number(localStorage.getItem('userId'));
+  const [deleteModalOpened, setDeleteModalOpened] = useState(false);
 
   const { data: skill, isLoading } = useQuery({
     queryKey: ['skill', id],
@@ -47,9 +48,26 @@ export function EditSkill() {
     }
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: () => skillsApi.delete(Number(id)),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['skills'] });
+      navigate('/skills');
+    }
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateMutation.mutate();
+  };
+
+  const handleDelete = () => {
+    setDeleteModalOpened(true);
+  };
+
+  const confirmDelete = () => {
+    deleteMutation.mutate();
+    setDeleteModalOpened(false);
   };
 
   if (isLoading) {
@@ -119,12 +137,50 @@ export function EditSkill() {
               />
             </Group>
 
-            <Button type="submit" loading={updateMutation.isPending} fullWidth mt="xl">
-              Update Skill
-            </Button>
+            <Flex gap="md" mt="xl">
+              <Button type="submit" loading={updateMutation.isPending} style={{ flex: 1 }}>
+                Update Skill
+              </Button>
+              <Button 
+                color="red" 
+                loading={deleteMutation.isPending}
+                onClick={handleDelete}
+                style={{ flex: 1 }}
+              >
+                Delete Skill
+              </Button>
+            </Flex>
           </Stack>
         </form>
       </Paper>
+
+      <Modal
+        opened={deleteModalOpened}
+        onClose={() => setDeleteModalOpened(false)}
+        title="Delete Skill"
+        centered
+      >
+        <Stack>
+          <Text>Are you sure you want to delete this skill? This action cannot be undone.</Text>
+          <Flex gap="md" mt="md">
+            <Button 
+              variant="outline" 
+              onClick={() => setDeleteModalOpened(false)} 
+              style={{ flex: 1 }}
+            >
+              Cancel
+            </Button>
+            <Button 
+              color="red" 
+              onClick={confirmDelete}
+              loading={deleteMutation.isPending}
+              style={{ flex: 1 }}
+            >
+              Delete
+            </Button>
+          </Flex>
+        </Stack>
+      </Modal>
     </Container>
   );
 } 

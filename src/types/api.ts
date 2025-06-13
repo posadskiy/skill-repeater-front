@@ -12,6 +12,9 @@ export interface Skill {
   number: number;
 }
 
+export type CreateSkillInput = Omit<Skill, 'id' | 'lastRepeated' | 'nextRepeated'>;
+export type UpdateSkillInput = Partial<CreateSkillInput> & { id: number };
+
 export interface User {
   id: number;
   username: string;

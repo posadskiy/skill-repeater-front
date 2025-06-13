@@ -20,8 +20,6 @@ export function CreateSkill() {
       name,
       description,
       level: 1,
-      lastRepeated: new Date().toISOString(),
-      nextRepeated: new Date().toISOString(),
       userId,
       period,
       number: number === '' ? 1 : number

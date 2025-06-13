@@ -12,7 +12,6 @@ export function CreateSkill() {
   const userId = Number(localStorage.getItem('userId'));
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
   const [period, setPeriod] = useState<Period>('DAYS');
   const [number, setNumber] = useState<number | ''>(1);
 
@@ -20,7 +19,6 @@ export function CreateSkill() {
     mutationFn: () => skillsApi.add({
       name,
       description,
-      category,
       level: 1,
       lastRepeated: new Date().toISOString(),
       nextRepeated: new Date().toISOString(),
@@ -68,21 +66,6 @@ export function CreateSkill() {
               placeholder="Describe your skill"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-            />
-
-            <Select
-              required
-              label="Category"
-              placeholder="Select category"
-              data={[
-                { value: 'programming', label: 'Programming' },
-                { value: 'language', label: 'Language' },
-                { value: 'music', label: 'Music' },
-                { value: 'sport', label: 'Sport' },
-                { value: 'other', label: 'Other' }
-              ]}
-              value={category}
-              onChange={(value) => setCategory(value || '')}
             />
 
             <Group grow>

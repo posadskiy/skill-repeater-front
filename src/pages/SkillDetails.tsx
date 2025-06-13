@@ -64,28 +64,34 @@ export function SkillDetails() {
             <Text size="lg" fw={500}>Details</Text>
             <Text size="sm" c="dimmed">Level: {skill.level}</Text>
             <Text size="sm" c="dimmed">{skill.description}</Text>
-            <Text size="sm" c="dimmed">
-              Next repeat: {new Date(skill.nextRepeated).toLocaleDateString()}
-            </Text>
+            <Stack gap="xs">
+              <Text size="lg" fw={500}>Next Repeat</Text>
+              <Text size="sm" c="dimmed">
+                {new Date(skill.nextRepeated).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} at {new Date(skill.nextRepeated).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+              </Text>
+            </Stack>
           </Stack>
         </Card>
 
         <Card shadow="sm" padding="lg">
           <Stack gap="xs">
             <Text size="lg" fw={500}>Repeat History</Text>
-            {history?.map((record) => (
-              <Group key={record.id} justify="space-between" wrap="nowrap">
-                <Text size="sm" c="dimmed">
-                  {new Date(record.repeatedAt).toLocaleDateString()}
-                </Text>
-                <Text size="sm" c="dimmed">
-                  {getDaysAgo(new Date(record.repeatedAt))}
-                </Text>
-                <Text size="sm" c="dimmed">
-                  {new Date(record.repeatedAt).toLocaleTimeString()}
-                </Text>
-              </Group>
-            ))}
+            {history?.map((record) => {
+              const date = new Date(record.repeatedAt);
+              return (
+                <Group key={record.id} justify="space-between" wrap="nowrap" gap="xs">
+                  <Text size="sm" c="dimmed" style={{ whiteSpace: 'nowrap' }}>
+                    {date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                  </Text>
+                  <Text size="sm" c="dimmed" style={{ whiteSpace: 'nowrap' }}>
+                    {getDaysAgo(date)}
+                  </Text>
+                  <Text size="sm" c="dimmed" style={{ whiteSpace: 'nowrap' }}>
+                    {date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+                  </Text>
+                </Group>
+              );
+            })}
           </Stack>
         </Card>
       </Stack>

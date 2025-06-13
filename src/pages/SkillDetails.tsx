@@ -1,7 +1,17 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Card, Text, Button, Group, Stack, Title } from '@mantine/core';
+import { Container, Card, Text, Button, Group, Stack, Title, Paper } from '@mantine/core';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
+
+function getDaysAgo(date: Date): string {
+  const today = new Date();
+  const diffTime = Math.abs(today.getTime() - date.getTime());
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 0) return 'today';
+  if (diffDays === 1) return 'yesterday';
+  return `${diffDays} days ago`;
+}
 
 export function SkillDetails() {
   const { id } = useParams<{ id: string }>();
@@ -64,12 +74,15 @@ export function SkillDetails() {
           <Stack gap="xs">
             <Text size="lg" fw={500}>Repeat History</Text>
             {history?.map((record) => (
-              <Group key={record.id} justify="space-between">
-                <Text size="sm">
-                  Repeated on: {new Date(record.repeatedAt).toLocaleDateString()}
+              <Group key={record.id} justify="space-between" wrap="nowrap">
+                <Text size="sm" c="dimmed">
+                  {new Date(record.repeatedAt).toLocaleDateString()}
                 </Text>
                 <Text size="sm" c="dimmed">
-                  Next: {new Date(record.nextRepeated).toLocaleDateString()}
+                  {getDaysAgo(new Date(record.repeatedAt))}
+                </Text>
+                <Text size="sm" c="dimmed">
+                  {new Date(record.repeatedAt).toLocaleTimeString()}
                 </Text>
               </Group>
             ))}

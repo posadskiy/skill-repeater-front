@@ -72,7 +72,7 @@ export function EditSkill() {
 
   if (isLoading) {
     return (
-      <Container>
+      <Container size="xs" px="xs">
         <Text>Loading...</Text>
       </Container>
     );
@@ -80,15 +80,15 @@ export function EditSkill() {
 
   if (!userId) {
     return (
-      <Container>
+      <Container size="xs" px="xs">
         <Text c="red">Please log in with your User ID and token</Text>
       </Container>
     );
   }
 
   return (
-    <Container size="sm">
-      <Paper radius="md" p="xl" withBorder>
+    <Container size="xs" px="xs">
+      <Paper radius="md" p="md" withBorder>
         <Title ta="center" mb="md">Edit Skill</Title>
 
         <form onSubmit={handleSubmit}>
@@ -137,7 +137,7 @@ export function EditSkill() {
               />
             </Group>
 
-            <Flex gap="md" mt="xl">
+            <Flex gap="md" mt="md">
               <Button type="submit" loading={updateMutation.isPending} style={{ flex: 1 }}>
                 Update Skill
               </Button>

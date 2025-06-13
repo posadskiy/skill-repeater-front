@@ -3,13 +3,13 @@ import { Container, Paper, Title, TextInput, Textarea, Select, Button, Stack, Te
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
-
-type Period = 'HOURS' | 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS';
+import type { Period } from '../types/api';
 
 export function CreateSkill() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userId = Number(localStorage.getItem('userId'));
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [period, setPeriod] = useState<Period>('DAYS');
@@ -37,16 +37,16 @@ export function CreateSkill() {
 
   if (!userId) {
     return (
-      <Container>
+      <Container size="xs" px="xs">
         <Text c="red">Please log in with your User ID and token</Text>
       </Container>
     );
   }
 
   return (
-    <Container size="sm">
-      <Paper radius="md" p="xl" withBorder>
-        <Title ta="center" mb="md">Create New Skill</Title>
+    <Container size="xs" px="xs">
+      <Paper radius="md" p="md" withBorder>
+        <Title ta="center" mb="md">Create Skill</Title>
 
         <form onSubmit={handleSubmit}>
           <Stack>
@@ -94,7 +94,7 @@ export function CreateSkill() {
               />
             </Group>
 
-            <Button type="submit" loading={addMutation.isPending} fullWidth mt="xl">
+            <Button type="submit" loading={addMutation.isPending} mt="md">
               Create Skill
             </Button>
           </Stack>

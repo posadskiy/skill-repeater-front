@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Card, Text, Button, Group, Stack, Title, Paper } from '@mantine/core';
+import { Container, Card, Text, Button, Group, Stack, Title } from '@mantine/core';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
 
@@ -18,14 +18,10 @@ export function SkillDetails() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: skill, isLoading: isLoadingSkill } = useQuery({
+  const { data: skill, isLoading } = useQuery({
     queryKey: ['skill', id],
-    queryFn: () => skillsApi.getById(Number(id))
-  });
-
-  const { data: history, isLoading: isLoadingHistory } = useQuery({
-    queryKey: ['skill-history', id],
-    queryFn: () => skillsApi.getHistory(Number(id))
+    queryFn: () => skillsApi.getById(Number(id)),
+    enabled: !!id
   });
 
   const repeatMutation = useMutation({
@@ -36,18 +32,32 @@ export function SkillDetails() {
     }
   });
 
-  if (isLoadingSkill || isLoadingHistory) {
-    return <Text>Loading...</Text>;
+  const { data: history } = useQuery({
+    queryKey: ['skill-history', id],
+    queryFn: () => skillsApi.getHistory(Number(id)),
+    enabled: !!id
+  });
+
+  if (isLoading) {
+    return (
+      <Container size="xs" px="xs">
+        <Text>Loading...</Text>
+      </Container>
+    );
   }
 
   if (!skill) {
-    return <Text>Skill not found</Text>;
+    return (
+      <Container size="xs" px="xs">
+        <Text c="red">Skill not found</Text>
+      </Container>
+    );
   }
 
   return (
-    <Container>
+    <Container size="xs" px="xs">
       <Stack gap="md">
-        <Group justify="space-between">
+        <Group justify="space-between" align="center">
           <Title order={2}>{skill.name}</Title>
           <Group>
             <Button variant="light" onClick={() => navigate(`/skills/${id}/edit`)}>
@@ -59,9 +69,8 @@ export function SkillDetails() {
           </Group>
         </Group>
 
-        <Card shadow="sm" padding="lg">
+        <Card withBorder>
           <Stack gap="xs">
-            <Text size="lg" fw={500}>Details</Text>
             <Text size="sm" c="dimmed">Level: {skill.level}</Text>
             <Text size="sm" c="dimmed">{skill.description}</Text>
             <Stack gap="xs">
@@ -73,7 +82,7 @@ export function SkillDetails() {
           </Stack>
         </Card>
 
-        <Card shadow="sm" padding="lg">
+        <Card withBorder>
           <Stack gap="xs">
             <Text size="lg" fw={500}>Repeat History</Text>
             {history?.map((record) => {

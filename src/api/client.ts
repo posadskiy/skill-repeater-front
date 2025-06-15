@@ -3,6 +3,7 @@ import { authApi } from './auth';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8210';
 const AUTH_BASE_URL = 'http://auth-service.local';
+const USER_BASE_URL = 'http://user-service.local';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -13,6 +14,13 @@ export const apiClient = axios.create({
 
 export const authClient = axios.create({
   baseURL: AUTH_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const userClient = axios.create({
+  baseURL: USER_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

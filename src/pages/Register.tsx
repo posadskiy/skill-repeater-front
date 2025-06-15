@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Container, Paper, Title, TextInput, PasswordInput, Button, Text, Anchor, Stack } from '@mantine/core';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { authApi } from '../api/auth';
+import { userApi } from '../api/user';
 
 export function Register() {
   const navigate = useNavigate();
@@ -11,10 +11,13 @@ export function Register() {
   const [password, setPassword] = useState('');
 
   const registerMutation = useMutation({
-    mutationFn: () => authApi.register(username, email, password),
-    onSuccess: (data) => {
-      localStorage.setItem('token', data.token);
-      navigate('/skills');
+    mutationFn: () => userApi.signup({ username, email, password }),
+    onSuccess: () => {
+      // After successful registration, redirect to login
+      navigate('/login');
+    },
+    onError: (error) => {
+      console.error('Registration failed:', error);
     }
   });
 
@@ -24,8 +27,8 @@ export function Register() {
   };
 
   return (
-    <Container size="xs">
-      <Paper radius="md" p="xl" withBorder>
+    <Container size="xs" h="100vh" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Paper radius="md" p="xl" withBorder style={{ width: '100%' }}>
         <Title ta="center" mb="md">Create an account</Title>
         <Text ta="center" c="dimmed" mb="xl">
           Already have an account?{' '}
@@ -42,6 +45,7 @@ export function Register() {
               placeholder="Your username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              error={registerMutation.isError ? 'Registration failed' : null}
             />
 
             <TextInput

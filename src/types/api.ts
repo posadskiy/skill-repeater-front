@@ -16,14 +16,15 @@ export type CreateSkillInput = Omit<Skill, 'id' | 'lastRepeated' | 'nextRepeated
 export type UpdateSkillInput = Partial<CreateSkillInput> & { id: number };
 
 export interface User {
-  id: number;
+  id: string;
   username: string;
   email: string;
 }
 
 export interface AuthResponse {
-  token: string;
-  userId: number;
+  access_token: string;
+  expires_in: number;
+  username: string;
 }
 
 export interface RepeatHistory {

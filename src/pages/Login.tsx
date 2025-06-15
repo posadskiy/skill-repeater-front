@@ -6,16 +6,18 @@ import { authApi } from '../api/auth';
 
 export function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState<number | ''>('');
 
   const loginMutation = useMutation({
-    mutationFn: () => authApi.login(email, password),
-    onSuccess: (data) => {
-      localStorage.setItem('token', data.token);
-      navigate('/skills');
+    mutationFn: () => authApi.login(username, password),
+    onSuccess: () => {
+      navigate('/');
+    },
+    onError: (error) => {
+      console.error('Login failed:', error);
     }
   });
 
@@ -29,7 +31,7 @@ export function Login() {
     if (token && userId) {
       localStorage.setItem('token', token);
       localStorage.setItem('userId', userId.toString());
-      navigate('/skills');
+      navigate('/');
     }
   };
 
@@ -48,10 +50,11 @@ export function Login() {
           <Stack>
             <TextInput
               required
-              label="Email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              label="Username"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              error={loginMutation.isError ? 'Invalid credentials' : null}
             />
 
             <PasswordInput

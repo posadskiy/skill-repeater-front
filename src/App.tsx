@@ -1,13 +1,14 @@
 import { AppShell, Burger, Group, Text, UnstyledButton, Stack, rem, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Link, Outlet, useNavigate, Navigate, useLocation } from 'react-router-dom';
-import { IconLogout } from '@tabler/icons-react';
+import { IconLogout, IconUser } from '@tabler/icons-react';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Skills } from './pages/Skills';
 import { SkillDetails } from './pages/SkillDetails';
 import { CreateSkill } from './pages/CreateSkill';
 import { EditSkill } from './pages/EditSkill';
+import { UserSettings } from './pages/UserSettings';
 import { Routes, Route } from 'react-router-dom';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -46,7 +47,12 @@ function AppLayout() {
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
             <Text size="lg" fw={700}>Skill Repeater</Text>
           </Group>
-          <Button variant="light" onClick={handleLogout}>Logout</Button>
+          <Group>
+            <Button variant="light" leftSection={<IconUser size={16} />} onClick={() => navigate('/settings')}>
+              Settings
+            </Button>
+            <Button variant="light" onClick={handleLogout}>Logout</Button>
+          </Group>
         </Group>
       </AppShell.Header>
 
@@ -108,6 +114,7 @@ export function App() {
         <Route path="skills/create" element={<CreateSkill />} />
         <Route path="skills/:id" element={<SkillDetails />} />
         <Route path="skills/:id/edit" element={<EditSkill />} />
+        <Route path="settings" element={<UserSettings />} />
       </Route>
     </Routes>
   );

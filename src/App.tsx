@@ -1,7 +1,7 @@
 import { AppShell, Burger, Group, Text, UnstyledButton, Stack, rem, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Link, Outlet, useNavigate, Navigate, useLocation } from 'react-router-dom';
-import { IconLogout, IconUser } from '@tabler/icons-react';
+import { Outlet, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { IconUser } from '@tabler/icons-react';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Skills } from './pages/Skills';

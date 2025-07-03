@@ -1,4 +1,4 @@
-import { AppShell as MantineAppShell, Text, Button, Group, Box } from '@mantine/core';
+import { AppShell as MantineAppShell, Text, Button, Group } from '@mantine/core';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { authApi } from '../api/auth';
 

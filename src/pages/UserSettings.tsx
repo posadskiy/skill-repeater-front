@@ -13,7 +13,9 @@ export function UserSettings() {
     console.log('Success in user settings:', message);
   };
 
-  if (!token || !userId) {
+    const USER_BASE_URL = import.meta.env.VITE_USER_SERVICE_URL || import.meta.env.VITE_USER_URL || '/user';
+
+    if (!token || !userId) {
     return null;
   }
   
@@ -22,7 +24,7 @@ export function UserSettings() {
       <Paper radius="md" p="xl" withBorder style={{ width: '100%' }}>
         <Title ta="center" mb="xl">User Settings</Title>
         <UserService
-          apiUrl="http://user-service.local"
+          apiUrl={USER_BASE_URL}
           userId={userId}
           bearerToken={token}
           onError={handleError}

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { authApi } from './auth';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8210';
-const AUTH_BASE_URL = import.meta.env.VITE_AUTH_URL || '/auth';
-const USER_BASE_URL = import.meta.env.VITE_USER_URL || '/user';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/v0';
+const AUTH_BASE_URL = import.meta.env.VITE_AUTH_SERVICE_URL || import.meta.env.VITE_AUTH_URL || '/auth';
+const USER_BASE_URL = import.meta.env.VITE_USER_SERVICE_URL || import.meta.env.VITE_USER_URL || '/user';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

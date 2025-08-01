@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skill-repeater-front
+  namespace: skill-repeater
+  labels:
+    app: skill-repeater-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skill-repeater-front
+  template:
+    metadata:
+      labels:
+        app: skill-repeater-front
+    spec:
+      containers:
+      - name: skill-repeater-front
+        image: gcr.io/posadskiy-shared-services-1/skill-repeater-front:${IMAGE_VERSION}
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: VITE_API_URL
+          value: "https://api.posadskiy.com/skill-repeater"
+        - name: VITE_AUTH_URL
+          value: "https://api.posadskiy.com/auth"
+        - name: VITE_USER_URL
+          value: "https://api.posadskiy.com/user"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: skill-repeater-front
+  namespace: skill-repeater
+  labels:
+    app: skill-repeater-front
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: skill-repeater-front 

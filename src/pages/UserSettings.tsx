@@ -13,7 +13,7 @@ export function UserSettings() {
     console.log('Success in user settings:', message);
   };
 
-    const USER_BASE_URL = import.meta.env.VITE_USER_SERVICE_URL || import.meta.env.VITE_USER_URL || '/user';
+    const USER_BASE_URL = import.meta.env.VITE_USER_URL || '/user';
 
     if (!token || !userId) {
     return null;

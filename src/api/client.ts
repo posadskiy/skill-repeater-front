@@ -22,7 +22,7 @@ export const apiClient = axios.create({
 // Create axios instance for auth API
 export const authClient = axios.create({
   baseURL: AUTH_URL,
-  timeout: 10000,
+  timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
   },

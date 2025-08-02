@@ -1,9 +1,14 @@
 import axios from 'axios';
 
 // Get API URLs from environment variables
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-const AUTH_URL = import.meta.env.VITE_AUTH_URL || 'http://localhost:8080';
-const USER_URL = import.meta.env.VITE_USER_URL || 'http://localhost:8080';
+const API_URL = import.meta.env.VITE_API_URL;
+const AUTH_URL = import.meta.env.VITE_AUTH_URL;
+const USER_URL = import.meta.env.VITE_USER_URL;
+
+// Validate that environment variables are set
+if (!API_URL || !AUTH_URL || !USER_URL) {
+  throw new Error('Required environment variables VITE_API_URL, VITE_AUTH_URL, and VITE_USER_URL must be set');
+}
 
 // Create axios instance for main API
 export const apiClient = axios.create({

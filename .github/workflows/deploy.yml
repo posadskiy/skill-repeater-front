@@ -139,6 +139,9 @@ jobs:
         
         echo "🐳 Building Docker image..."
         docker buildx build --platform linux/amd64 \
+          --build-arg VITE_API_URL=https://api.posadskiy.com/skill-repeater \
+          --build-arg VITE_AUTH_URL=https://api.posadskiy.com/auth \
+          --build-arg VITE_USER_URL=https://api.posadskiy.com/user \
           -f Dockerfile.prod \
           -t $IMAGE_TAG \
           -t $IMAGE_TAG_DATE \

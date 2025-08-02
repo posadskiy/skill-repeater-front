@@ -7,6 +7,11 @@ WORKDIR /app
 # Install dependencies for build
 RUN apk add --no-cache python3 make g++
 
+# Define build arguments for environment variables
+ARG VITE_API_URL
+ARG VITE_AUTH_URL
+ARG VITE_USER_URL
+
 # Copy package files
 COPY package*.json ./
 

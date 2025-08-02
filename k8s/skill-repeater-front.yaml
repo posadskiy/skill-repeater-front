@@ -23,21 +23,6 @@ spec:
         env:
         - name: NODE_ENV
           value: "production"
-        - name: VITE_API_URL
-          valueFrom:
-            configMapKeyRef:
-              name: skill-repeater-config
-              key: API_BASE_URL
-        - name: VITE_AUTH_URL
-          valueFrom:
-            configMapKeyRef:
-              name: skill-repeater-config
-              key: AUTH_API_BASE_URL
-        - name: VITE_USER_URL
-          valueFrom:
-            configMapKeyRef:
-              name: skill-repeater-config
-              key: USER_API_BASE_URL
         resources:
           requests:
             memory: "128Mi"

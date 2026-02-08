@@ -235,7 +235,7 @@ jobs:
         export DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME
         
         # Create temporary skill-repeater-front.yaml with image substitution
-        envsubst < k8s/skill-repeater-front.yaml | kubectl apply -f -
+        envsubst < deployment/skill-repeater-front.yaml | kubectl apply -f -
         
         # Wait for skill-repeater-front to be ready
         echo "⏳ Waiting for skill-repeater-front to be ready..."

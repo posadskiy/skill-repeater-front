@@ -7,7 +7,9 @@ set -e
 
 SERVICE_NAME="skill-repeater-front"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SERVICE_DEPLOYMENT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+# deployment/scripts -> skill-repeater-front/
+SERVICE_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+SERVICE_MANIFEST="$SERVICE_ROOT/deployment/$SERVICE_NAME.yaml"
 NAMESPACE="${K8S_NAMESPACE:-skill-repeater}"
 
 if [ $# -lt 1 ]; then
@@ -42,7 +44,7 @@ export DOCKERHUB_USERNAME
 
 echo "🚀 Applying $SERVICE_NAME manifest (version: $VERSION)..."
 export IMAGE_VERSION=$VERSION
-envsubst < "$SERVICE_DEPLOYMENT/$SERVICE_NAME.yaml" | kubectl apply -f -
+envsubst < "$SERVICE_MANIFEST" | kubectl apply -f -
 
 echo ""
 echo "⏳ Waiting for deployment..."

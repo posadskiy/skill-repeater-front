@@ -3,7 +3,7 @@ import { Container, Paper, Title, TextInput, Textarea, Select, Button, Stack, Te
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
-import type { Period } from '../types/api';
+import { PRIORITY_SELECT_OPTIONS, type Period, type Priority } from '../types/api';
 
 export function EditSkill() {
   const { id } = useParams<{ id: string }>();
@@ -22,6 +22,7 @@ export function EditSkill() {
   const [description, setDescription] = useState('');
   const [period, setPeriod] = useState<Period>('DAYS');
   const [number, setNumber] = useState<number | ''>(1);
+  const [priority, setPriority] = useState<Priority>('MEDIUM');
 
   useEffect(() => {
     if (skill) {
@@ -29,6 +30,7 @@ export function EditSkill() {
       setDescription(skill.description);
       setPeriod(skill.period);
       setNumber(skill.number);
+      setPriority(skill.priority ?? 'MEDIUM');
     }
   }, [skill]);
 
@@ -40,7 +42,8 @@ export function EditSkill() {
       level: skill?.level || 1,
       userId,
       period,
-      number: number === '' ? 1 : number
+      number: number === '' ? 1 : number,
+      priority
     }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['skills'] });
@@ -136,6 +139,15 @@ export function EditSkill() {
                 style={{ flex: 1 }}
               />
             </Group>
+
+            <Select
+              required
+              label="Priority"
+              description="How important this skill is to practice"
+              data={PRIORITY_SELECT_OPTIONS}
+              value={priority}
+              onChange={(value) => setPriority((value as Priority) ?? 'MEDIUM')}
+            />
 
             <Flex gap="md" mt="md">
               <Button type="submit" loading={updateMutation.isPending} style={{ flex: 1 }}>

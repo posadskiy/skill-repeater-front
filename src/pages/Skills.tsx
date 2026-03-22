@@ -2,6 +2,7 @@ import { Container, Card, Text, Button, Group, Stack, Title, SimpleGrid } from '
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
+import { priorityLabel } from '../types/api';
 
 export function Skills() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export function Skills() {
             <Card key={skill.id} withBorder>
               <Stack gap="xs">
                 <Title order={3}>{skill.name}</Title>
-                <Text size="sm" c="dimmed">Level: {skill.level}</Text>
+                <Text size="sm" c="dimmed">Level: {skill.level} · Priority: {priorityLabel(skill.priority)}</Text>
                 <Text size="sm" c="dimmed" lineClamp={2}>{skill.description}</Text>
                 <Text size="sm" c="dimmed">
                   Next: {new Date(skill.nextRepeated).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} at {new Date(skill.nextRepeated).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}

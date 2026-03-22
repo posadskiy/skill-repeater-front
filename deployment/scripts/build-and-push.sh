@@ -7,8 +7,8 @@ set -e
 
 SERVICE_NAME="skill-repeater-front"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SERVICE_DEPLOYMENT="$(dirname "$(dirname "$SCRIPT_DIR")")"
-SERVICE_ROOT="$(dirname "$SERVICE_DEPLOYMENT")"
+# deployment/scripts -> deployment -> skill-repeater-front/ (Dockerfile.prod lives here)
+SERVICE_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 
 if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_TOKEN" ]; then
   echo "Error: DOCKERHUB_USERNAME and DOCKERHUB_TOKEN are required" >&2

@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Text, Button, Group, Stack, Title } from '@mantine/core';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
+import { priorityLabel } from '../types/api';
 
 function getDaysAgo(date: Date): string {
   const today = new Date();
@@ -72,6 +73,7 @@ export function SkillDetails() {
         <Card withBorder>
           <Stack gap="xs">
             <Text size="sm" c="dimmed">Level: {skill.level}</Text>
+            <Text size="sm" c="dimmed">Priority: {priorityLabel(skill.priority)}</Text>
             <Text size="sm" c="dimmed">{skill.description}</Text>
             <Stack gap="xs">
               <Text size="lg" fw={500}>Next Repeat</Text>

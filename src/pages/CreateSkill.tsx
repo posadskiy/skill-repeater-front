@@ -3,7 +3,7 @@ import { Container, Paper, Title, TextInput, Textarea, Select, Button, Stack, Te
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { skillsApi } from '../api/skills';
-import type { Period } from '../types/api';
+import { PRIORITY_SELECT_OPTIONS, type Period, type Priority } from '../types/api';
 
 export function CreateSkill() {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ export function CreateSkill() {
   const [description, setDescription] = useState('');
   const [period, setPeriod] = useState<Period>('DAYS');
   const [number, setNumber] = useState<number | ''>(1);
+  const [priority, setPriority] = useState<Priority>('MEDIUM');
 
   const addMutation = useMutation({
     mutationFn: () => skillsApi.add({
@@ -22,7 +23,8 @@ export function CreateSkill() {
       level: 1,
       userId,
       period,
-      number: number === '' ? 1 : number
+      number: number === '' ? 1 : number,
+      priority
     }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['skills'] });
@@ -93,6 +95,15 @@ export function CreateSkill() {
                 style={{ flex: 1 }}
               />
             </Group>
+
+            <Select
+              required
+              label="Priority"
+              description="How important this skill is to practice"
+              data={PRIORITY_SELECT_OPTIONS}
+              value={priority}
+              onChange={(value) => setPriority((value as Priority) ?? 'MEDIUM')}
+            />
 
             <Button type="submit" loading={addMutation.isPending} mt="md">
               Create Skill

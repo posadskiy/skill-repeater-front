@@ -47,7 +47,7 @@ npm ci
 ```env
 VITE_API_URL=http://localhost:8210/
 VITE_AUTH_URL=http://localhost:8100/
-VITE_USER_URL=http://localhost:8090/v0
+VITE_USER_URL=http://localhost:8090/
 ```
 
 3. Start the dev server:
@@ -100,7 +100,7 @@ All three variables are **required** — the app throws at startup if any is mis
 |----------|-------------|---------|
 | `VITE_API_URL` | Skill Repeater backend base URL | `http://localhost:8210/` |
 | `VITE_AUTH_URL` | External auth service base URL | `http://localhost:8100/` |
-| `VITE_USER_URL` | External user service base URL | `http://localhost:8090/v0` |
+| `VITE_USER_URL` | External user service base URL | `http://localhost:8090/` |
 
 ## Production
 

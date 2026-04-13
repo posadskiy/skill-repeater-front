@@ -1,15 +1,23 @@
 import { AppShell, Burger, Group, Text, UnstyledButton, Stack, rem, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Outlet, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import {
+  Navigate,
+  Outlet,
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { IconUser } from '@tabler/icons-react';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
-import { Skills } from './pages/Skills';
-import { SkillDetails } from './pages/SkillDetails';
+import { withFaroRouterInstrumentation } from '@grafana/faro-react';
 import { CreateSkill } from './pages/CreateSkill';
 import { EditSkill } from './pages/EditSkill';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { SkillDetails } from './pages/SkillDetails';
+import { Skills } from './pages/Skills';
 import { UserSettings } from './pages/UserSettings';
-import { Routes, Route } from 'react-router-dom';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -37,7 +45,7 @@ function AppLayout() {
       navbar={{
         width: { base: '100%', sm: 300 },
         breakpoint: 'sm',
-        collapsed: { mobile: !opened }
+        collapsed: { mobile: !opened },
       }}
       padding={{ base: 'xs', sm: 'md' }}
     >
@@ -45,13 +53,21 @@ function AppLayout() {
         <Group h="100%" px={{ base: 'xs', sm: 'md' }} justify="space-between">
           <Group>
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <Text size="lg" fw={700}>Skill Repeater</Text>
+            <Text size="lg" fw={700}>
+              Skill Repeater
+            </Text>
           </Group>
           <Group>
-            <Button variant="light" leftSection={<IconUser size={16} />} onClick={() => navigate('/settings')}>
+            <Button
+              variant="light"
+              leftSection={<IconUser size={16} />}
+              onClick={() => navigate('/settings')}
+            >
               Settings
             </Button>
-            <Button variant="light" onClick={handleLogout}>Logout</Button>
+            <Button variant="light" onClick={handleLogout}>
+              Logout
+            </Button>
           </Group>
         </Group>
       </AppShell.Header>
@@ -96,26 +112,26 @@ function AppLayout() {
   );
 }
 
-export function App() {
-  return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <AppLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Navigate to="/skills" replace />} />
-        <Route path="skills" element={<Skills />} />
-        <Route path="skills/create" element={<CreateSkill />} />
-        <Route path="skills/:id" element={<SkillDetails />} />
-        <Route path="skills/:id/edit" element={<EditSkill />} />
-        <Route path="settings" element={<UserSettings />} />
-      </Route>
-    </Routes>
-  );
-}
+const routes = createRoutesFromElements(
+  <>
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
+    <Route
+      path="/"
+      element={
+        <ProtectedRoute>
+          <AppLayout />
+        </ProtectedRoute>
+      }
+    >
+      <Route index element={<Navigate to="/skills" replace />} />
+      <Route path="skills" element={<Skills />} />
+      <Route path="skills/create" element={<CreateSkill />} />
+      <Route path="skills/:id" element={<SkillDetails />} />
+      <Route path="skills/:id/edit" element={<EditSkill />} />
+      <Route path="settings" element={<UserSettings />} />
+    </Route>
+  </>
+);
+
+export const router = withFaroRouterInstrumentation(createBrowserRouter(routes));
